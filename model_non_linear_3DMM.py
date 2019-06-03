@@ -5,7 +5,7 @@ Part of data/input pipeline is ommitted
 '''
 
 
-from __future__ import division
+
 import os
 import time
 import csv
@@ -221,11 +221,11 @@ class DCGAN(object):
 
         start_time = time.time()
         
-        for epoch in xrange(epoch0, config.epoch):
+        for epoch in range(epoch0, config.epoch):
             
             batch_idxs = min(len(valid_idx), config.train_size) // config.batch_size
             
-            for idx in xrange(0, batch_idxs):
+            for idx in range(0, batch_idxs):
                 '''
                 Data processing. Create feed_dict
                 .
@@ -524,7 +524,7 @@ class DCGAN(object):
             os.makedirs(checkpoint_dir)
 
         self.saver.save(self.sess, os.path.join(checkpoint_dir, model_name), global_step=step)
-        print(" Saved checkpoint %s-%d" % (os.path.join(checkpoint_dir, model_name), step))
+        print((" Saved checkpoint %s-%d" % (os.path.join(checkpoint_dir, model_name), step)))
 
     def load(self, checkpoint_dir):
         import re
@@ -537,7 +537,7 @@ class DCGAN(object):
 
             self.saver.restore(self.sess, os.path.join(checkpoint_dir, ckpt_name))
             counter = int(next(re.finditer("(\d+)(?!.*\d)",ckpt_name)).group(0))
-            print(" [*] Success to read {}".format(ckpt_name))
+            print((" [*] Success to read {}".format(ckpt_name)))
 
 
             return True, counter

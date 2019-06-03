@@ -261,14 +261,14 @@ def visualize(sess, dcgan, config, option):
 
 
 def load_300W_LP_dataset(dataset):
-    print(('Loading ' + dataset +' ...'))
+    print('Loading ' + dataset +' ...')
    
     fd = open(_300W_LP_DIR+'/filelist/'+dataset+'_filelist.txt', 'r')
     all_images = []
     for line in fd:
         all_images.append(line.strip())
     fd.close()
-    print(('    DONE. Finish loading ' + dataset +' with ' + str(len(all_images)) + ' images')) 
+    print('    DONE. Finish loading ' + dataset +' with ' + str(len(all_images)) + ' images') 
 
     fd = open(_300W_LP_DIR+'/filelist/'+dataset+'_param.dat')
     all_paras = np.fromfile(file=fd, dtype=np.float32)

@@ -7,11 +7,11 @@ from tensorflow.python.framework import ops
 from utils import *
 
 def make_parallel(fn, num_gpus, **kwargs):
-    print(("Making make_parallel for %d gpu(s)" % num_gpus))
+    print("Making make_parallel for %d gpu(s)" % num_gpus)
     in_splits = {}
-    for k, v in list(kwargs.items()):
+    for k, v in kwargs.items():
         if type(v) == list:
-            in_splits[k] = list(zip(*[iter(v)]*( int( len(v) / num_gpus ) )))
+            in_splits[k] = zip(*[iter(v)]*( int( len(v) / num_gpus ) ))
         else:
             in_splits[k] = tf.split(v, num_gpus)
 
@@ -19,7 +19,7 @@ def make_parallel(fn, num_gpus, **kwargs):
     for i in range(num_gpus):
         with tf.device(tf.DeviceSpec(device_type="GPU", device_index=i)):
             with tf.variable_scope(tf.get_variable_scope(), reuse= i!=0):# tf.AUTO_REUSE):
-                out_split.append(fn(**{k : v[i] for k, v in list(in_splits.items())}))
+                out_split.append(fn(**{k : v[i] for k, v in in_splits.items()}))
 
     output_num = len(out_split[0])
     output = []
